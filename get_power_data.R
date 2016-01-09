@@ -9,13 +9,6 @@ fetch_power_data <- function() {
   unzip(destfile)
 }
 
-readthis <- function(fileURL,destfile) {
-  temp <- tempfile()
-  download.file(fileURL,temp,mode="wb")
-  data <- read.table(unz(temp, destfile))
-  unlink(temp)
-}
-
 read_power_data <- function() {
   # FUNCTION read_power_data(), returns a data.table of the specific power profile
   # on dates Feb 1-2, 2007
@@ -35,7 +28,7 @@ read_power_data <- function() {
   pwr_all <- fread(input=filename, sep=";")
   options(warn=0) # turn warnings on
   
-  # subset the two days needed
+  # subset the two days needed Feb 1-2, 2007
   pwr <- subset(pwr_all,Date=="1/2/2007" | Date=="2/2/2007")
   # we need realtime later on, so bind it to the table
   realtime <- as.POSIXct(strptime(paste(pwr$Date,pwr$Time), "%d/%m/%Y %H:%M:%S"))
